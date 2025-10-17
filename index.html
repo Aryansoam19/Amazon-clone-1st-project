@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="shortcut icon" href="amazon.jpg" type="image/jpg">
+    <!-- load script with defer so it runs after parsing -->
+    <script src="script.js" defer></script>
 </head>
 <body>
     <header>
@@ -77,9 +79,15 @@
     </div>
 
     <div class="hero-section">
+        <div class="carousel">
+            <div class="slide active" style="background-image: url('hero1.jpg');"></div>
+            <div class="slide" style="background-image: url('hero2.jpg');"></div>
+            <div class="slide" style="background-image: url('hero3.jpg');"></div>
+        </div>
+
         <div class="hero-msg">
             <p>You are on amazon.com. You can also shop on Amazon India for millions of products with fast local delivery.</p>
-            <a class="hero-link" href="#"> Click here to go to amazon.in</a>
+            <a class="hero-link" href="https://www.amazon.com/"> Click here to go to amazon.in</a>
         </div>
     </div>
 
@@ -89,6 +97,7 @@
                 <h2 class="heading">Gifts for Mother's Day</h2> 
                 <div class="box-img" style="background-image: url('mothers\ day.jpg');"></div>
                 <a href="#">See more</a>
+                <button class="add-to-cart-btn" type="button" aria-label="Add Gifts for Mother's Day to cart">Add to cart</button>
             </div>
         </div>
 
@@ -254,6 +263,9 @@
         
 
    </footer>
+
+   <!-- Back to top button required by script -->
+   <button id="back-to-top-btn" aria-label="Back to top">↑</button>
 
 </body>
 </html>
