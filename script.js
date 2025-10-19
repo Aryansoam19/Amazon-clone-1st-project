@@ -137,4 +137,67 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1000);
     }
 
+    // Horizontal scroller for .box13 (buttons appear only when needed)
+    (function initBox13Scroll() {
+        const wrappers = document.querySelectorAll('.box13-wrapper');
+        wrappers.forEach(wrapper => {
+            const container = wrapper.querySelector('.box13-content');
+            const btnLeft = wrapper.querySelector('.scroll-btn.left');
+            const btnRight = wrapper.querySelector('.scroll-btn.right');
+            if (!container || !btnLeft || !btnRight) return;
+
+            // determine when to show buttons
+            function updateButtons() {
+                const need = container.scrollWidth > container.clientWidth + 1;
+                btnLeft.classList.toggle('hidden', !need || container.scrollLeft <= 2);
+                btnRight.classList.toggle('hidden', !need || container.scrollLeft + container.clientWidth >= container.scrollWidth - 2);
+            }
+
+            // scroll by visible width (80%) or a min step
+            function scrollBy(dir) {
+                const step = Math.max(container.clientWidth * 0.8, 220);
+                container.scrollBy({ left: dir * step, behavior: 'smooth' });
+            }
+
+            // attach
+            btnLeft.addEventListener('click', () => scrollBy(-1));
+            btnRight.addEventListener('click', () => scrollBy(1));
+            container.addEventListener('scroll', updateButtons);
+            window.addEventListener('resize', updateButtons);
+            // keyboard support (left/right when container focused)
+            container.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') { e.preventDefault(); scrollBy(1); }
+                if (e.key === 'ArrowLeft')  { e.preventDefault(); scrollBy(-1); }
+            });
+
+            // pointer drag support for desktop (smooth touch-like dragging)
+            let isDown = false, startX, scrollStart;
+            container.addEventListener('pointerdown', (e) => {
+                isDown = true;
+                container.style.scrollSnapType = 'none';
+                startX = e.clientX;
+                scrollStart = container.scrollLeft;
+                container.setPointerCapture(e.pointerId);
+            });
+            container.addEventListener('pointermove', (e) => {
+                if (!isDown) return;
+                const dx = e.clientX - startX;
+                container.scrollLeft = scrollStart - dx;
+            });
+            container.addEventListener('pointerup', (e) => {
+                isDown = false;
+                container.releasePointerCapture(e.pointerId);
+                // restore snapping if used
+                setTimeout(() => { container.style.scrollSnapType = ''; }, 50);
+                updateButtons();
+            });
+            container.addEventListener('pointercancel', () => { isDown = false; updateButtons(); });
+
+            // initial state
+            updateButtons();
+            // small debounce check after images load (in case images affect width)
+            window.addEventListener('load', updateButtons);
+        });
+    })();
+
 });

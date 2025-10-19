@@ -340,27 +340,64 @@ html, body {
     flex-wrap: nowrap;
 }
 
-.box-img13 {
-    /* Set a fixed size for each item (adjust 250px as needed) */
-    flex: 0 0 209px; /* flex-grow: 0, flex-shrink: 0, flex-basis: 250px */
-    height: 300px; /* Fixed height for the image area */
-    margin-left: 1rem;
-    margin-top: 1.5rem;
-    cursor: pointer; /* Optional: indicates clickability */
-    transition: transform 0.4s ease; /* Optional: smooth hover effect */
-
-    /* Background image properties */
-    background-size: contain; /* Ensures the image covers the area */
-    background-position:center; /* Centers the image */
-    background-repeat: no-repeat; /* Prevents image tiling */
-    justify-content: space-evenly;
+/* wrapper for horizontal scroller with buttons */
+.box13-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
-/* Optional: Hover effect for a better user experience */
-.box-img13:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+/* scroll area */
+.box13-content {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding: 1rem;
+    width: 100%;
 }
+
+/* hide native scrollbar (optional, still scrollable) */
+.box13-content::-webkit-scrollbar { height: 8px; }
+.box13-content::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 6px; }
+.box13-content { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.12) transparent; }
+
+/* scroll buttons */
+.scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(4px);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    cursor: pointer;
+    z-index: 5;
+    transition: opacity 150ms ease, transform 120ms ease;
+}
+.scroll-btn:active { transform: translateY(-50%) scale(0.96); }
+.scroll-btn.left { left: 6px; }
+.scroll-btn.right { right: 6px; }
+
+/* hide visually when not needed */
+.scroll-btn.hidden { opacity: 0; pointer-events: none; transform: translateY(-50%) scale(0.98); }
+
+/* slightly smaller and reposition on small screens */
+@media (max-width: 600px) {
+    .scroll-btn { width: 34px; height: 34px; }
+    .scroll-btn.left { left: 4px; }
+    .scroll-btn.right { right: 4px; }
+}
+
+/* ensure each item keeps intended size and won't force overflow vertically */
+.box-img13 { flex: 0 0 209px; height: 300px; }
 
 /* footer */
 
@@ -598,3 +635,46 @@ ul{
     text-align: center;
     color: #555555;
 }
+
+/* Ensure any element using background-image preserves aspect ratio */
+.slide,
+.carousel .slide,
+.box-img,
+.box-img11,
+.box-img13,
+.logo,
+.hero-section,
+.box .box-img {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover; /* preserve aspect ratio while filling container */
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+}
+
+/* If you use <img> elements anywhere, make them responsive and keep aspect ratio */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover; /* if img is sized by CSS (width/height), this preserves aspect */
+}
+
+/* For fixed-size scroller items keep a stable aspect ratio (adjust ratio as needed) */
+.box-img13 {
+    flex: 0 0 209px;
+    height: 300px;
+    aspect-ratio: 209 / 300; /* modern browsers keep ratio */
+    background-size: cover; /* ensure consistent fill */
+}
+
+/* For other product image boxes use a common aspect */
+.box-img {
+    width: 100%;
+    aspect-ratio: 4 / 3; /* change to 16/9 or other ratio if you prefer */
+    background-size: cover;
+    background-position: center;
+}
+
+/* If you need centered contained images instead of fill, use 'contain' (may show gaps) */
+/* .box-img { background-size: contain; background-color: #f6f6f6; } */
