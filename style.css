@@ -1,7 +1,36 @@
-*{
+*,
+*::before,
+*::after {
     margin: 0;
-    border: border-box;
-    font-family: Arial;
+    box-sizing: border-box;
+}
+
+/* set page font on body only (do not force on every element) */
+body {
+    font-family: Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Ensure Font Awesome glyphs keep their font (preserve icons) */
+.fa,
+.fas,
+.far,
+.fal,
+.fab,
+.fa-solid,
+.fa-regular,
+.fa-brands {
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", sans-serif;
+    font-weight: 900; /* matches FA6 solid; brands may ignore weight */
+}
+
+/* Prevent accidental horizontal scrolling while you fix layout issues */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .navbar{
@@ -56,7 +85,8 @@
 
 .search{
     display: flex;
-    width: 600px;
+    width: 100%;
+    max-width: 600px; /* keeps intended desktop size but prevents overflow on narrow screens */
     height: 37px;
     border-radius: 5%;
 }
@@ -90,15 +120,27 @@
 /* box 4*/
 
 .list-one{
-    color: #ffffff;
-    font-size: 0.80rem;
-    font-weight: 300;
+    color: #000000;
+    height: 40px;
+    width: 130px;
+    background-color: #ffba25;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    text-decoration: none;
 }
 
-.list-two{
-    color: #ffffff;
-    font-size: 1rem;
-    font-weight: 400;
+.list-one:hover{
+    background-color: #ffa500;
+    transform: scale(1.05);
+}
+
+.signup{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    font-weight: 600;
 }
 
 /* box 5 */
@@ -118,8 +160,8 @@
 /* box 6 */
 
 .nav-cart i {
-     font-size: 25px;
-     display: flex;
+    font-size: 25px;
+    display: flex;
 }
 
 .nav-cart{
@@ -223,9 +265,11 @@
     /* border: 2px solid black; */
     height: 400px;
     width: 23%;
+    min-width: 200px; /* fallback for small screens */
     background-color: white;   
     padding: 20xp 0px 15px;
     margin-bottom: 1rem;
+    box-sizing: border-box;
 }
 
 .heading{
@@ -476,4 +520,81 @@ ul{
 @media (max-width: 420px) {
     .cart-toast { right: 12px; left: 12px; bottom: 74px; width: auto; text-align: center; }
     #back-to-top-btn { right: 12px; bottom: 12px; }
+}
+
+/* page 2 - signup-page CSS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+
+.amazon-image{
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+}
+
+.signup-box{
+    border: 1px solid #888888;
+    height: 400px;
+    width: 440px;
+    margin: auto;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.placeholder{
+    margin: 20px 20px 10px 20px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+#email-phone{
+    height: 30px;
+    width: 94%;
+    margin-top: 3px;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.continue-btn{
+    margin: 20px;
+    height: 35px;
+    width: 90%;
+    background-color: #ffd814;
+    border: 1px solid #f0c14b;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.continue-btn:hover{
+    background-color: #f7ca00;
+    transform: scale(1.05);
+}
+
+.para{
+    margin: 15px 20px 10px 20px;
+    font-size: 0.9rem;
+}
+
+.links{
+    color: rgb(40, 40, 228);
+    text-decoration: none;
+}
+
+.line{
+    margin-top: 20px;
+}
+
+.heading{
+    font-weight: 100;
+}
+
+/* footer */
+
+.footer-signup{
+    margin-top: 50px;
+    text-align: center;
+    color: #555555;
 }

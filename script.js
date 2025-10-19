@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             heroMsg.classList.remove('animate-show');
             heroMsg.classList.add('animate-hide');
-        }, 7000);
+        }, 1000);
     }
 
 });
